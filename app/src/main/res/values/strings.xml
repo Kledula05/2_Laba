@@ -13,5 +13,9 @@
 
     <string name="history_empty">Сыграйте первый матч</string>
 
-    <string name="game_not_ready">Экран дуэли пока не готов. Режим: %1$s, игра до %2$d очков</string>
+    <string name="round_ready">Приготовьтесь…</string>
+    <string name="round_signal">ЖМИ!</string>
+    <string name="round_falsestart">Фальстарт!</string>
+    <string name="round_point">+1 · %1$d мс</string>
+    <string name="match_over">Матч окончен! %1$s — %2$d:%3$d</string>
 </resources>

@@ -1,17 +1,20 @@
-package com.ustenko
+package com.ustenko.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.ustenko.R
+import com.ustenko.model.GameMode
+import com.ustenko.ui.game.GameActivity
 
-class MainActivity : AppCompatActivity() {
+class   MainActivity : AppCompatActivity() {
 
     private lateinit var rgMode: RadioGroup
     private lateinit var etPlayer1Name: EditText
@@ -56,8 +59,12 @@ class MainActivity : AppCompatActivity() {
             else -> 5
         }
 
-        val modeText = if (mode == GameMode.DUO) player2Name.let { "${player1Name} vs $it" } else player1Name
-
-        Toast.makeText(this, getString(R.string.game_not_ready, modeText, targetScore), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, GameActivity::class.java).apply {
+            putExtra(GameActivity.EXTRA_MODE, mode.name)
+            putExtra(GameActivity.EXTRA_PLAYER1_NAME, player1Name)
+            putExtra(GameActivity.EXTRA_PLAYER2_NAME, player2Name)
+            putExtra(GameActivity.EXTRA_TARGET_SCORE, targetScore)
+        }
+        startActivity(intent)
     }
 }

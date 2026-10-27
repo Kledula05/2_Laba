@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="round_waiting">#9E9E9E</color>
+    <color name="round_signal">#4CAF50</color>
+    <color name="round_falsestart">#F44336</color>
+    <color name="round_win">#FFC107</color>
 </resources>

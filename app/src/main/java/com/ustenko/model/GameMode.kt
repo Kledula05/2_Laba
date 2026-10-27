@@ -1,4 +1,4 @@
-package com.ustenko
+package com.ustenko.model
 
 enum class GameMode {
     SINGLE,
