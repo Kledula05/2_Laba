@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">2_Laba</string>
+    <string name="app_name">Reflex Duel</string>
+
+    <string name="mode_single">Одиночный</string>
+    <string name="mode_duo">Парный</string>
+
+    <string name="player1_hint">Игрок 1</string>
+    <string name="player2_hint">Игрок 2</string>
+
+    <string name="score_label">До скольких очков:</string>
+
+    <string name="btn_play">Играть</string>
+
+    <string name="history_empty">Сыграйте первый матч</string>
+
+    <string name="game_not_ready">Экран дуэли пока не готов. Режим: %1$s, игра до %2$d очков</string>
 </resources>
