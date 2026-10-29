@@ -7,4 +7,10 @@
     <color name="round_signal">#4CAF50</color>
     <color name="round_falsestart">#F44336</color>
     <color name="round_win">#FFC107</color>
+
+    <color name="screen_background">#F2F3F7</color>
+    <color name="blue_primary">#3D6AF2</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="divider_gray">#E5E7EB</color>
+    <color name="gold_star">#FFC107</color>
 </resources>

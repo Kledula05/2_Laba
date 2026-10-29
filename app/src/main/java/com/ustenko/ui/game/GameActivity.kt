@@ -1,5 +1,6 @@
 package com.ustenko.ui.game
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ustenko.R
 import com.ustenko.model.GameMode
+import com.ustenko.ui.result.ResultActivity
 import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
@@ -46,6 +48,10 @@ class GameActivity : AppCompatActivity() {
 
     private var score1 = 0
     private var score2 = 0
+    private var falseStarts1 = 0
+    private var falseStarts2 = 0
+    private val reactions1 = mutableListOf<Long>()
+    private val reactions2 = mutableListOf<Long>()
     private var phase = RoundPhase.WAITING
     private var signalTimeMs = 0L
 
@@ -132,6 +138,7 @@ class GameActivity : AppCompatActivity() {
         phase = RoundPhase.ROUND_OVER
         setHalfColor(player, R.color.round_falsestart)
         setStatus(player, getString(R.string.round_falsestart))
+        if (player == 1) falseStarts1++ else falseStarts2++
 
         if (mode == GameMode.DUO) {
             addScore(otherPlayer(player))
@@ -145,6 +152,7 @@ class GameActivity : AppCompatActivity() {
         phase = RoundPhase.ROUND_OVER
         val reactionMs = SystemClock.elapsedRealtime() - signalTimeMs
         addScore(player)
+        if (player == 1) reactions1.add(reactionMs) else reactions2.add(reactionMs)
         setHalfColor(player, R.color.round_win)
         setStatus(player, getString(R.string.round_point, reactionMs.toInt()))
 
@@ -165,8 +173,25 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun finishMatch() {
-        val winnerName = if (score1 >= targetScore) player1Name else player2Name
-        Toast.makeText(this, getString(R.string.match_over, winnerName, score1, score2), Toast.LENGTH_LONG).show()
+        if (mode == GameMode.DUO) {
+            val intent = Intent(this, ResultActivity::class.java).apply {
+                putExtra(ResultActivity.EXTRA_PLAYER1_NAME, player1Name)
+                putExtra(ResultActivity.EXTRA_PLAYER2_NAME, player2Name)
+                putExtra(ResultActivity.EXTRA_SCORE1, score1)
+                putExtra(ResultActivity.EXTRA_SCORE2, score2)
+                putExtra(ResultActivity.EXTRA_AVG1, reactions1.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+                putExtra(ResultActivity.EXTRA_AVG2, reactions2.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+                putExtra(ResultActivity.EXTRA_BEST1, reactions1.minOrNull() ?: ResultActivity.NO_DATA)
+                putExtra(ResultActivity.EXTRA_BEST2, reactions2.minOrNull() ?: ResultActivity.NO_DATA)
+                putExtra(ResultActivity.EXTRA_FALSESTARTS1, falseStarts1)
+                putExtra(ResultActivity.EXTRA_FALSESTARTS2, falseStarts2)
+                putExtra(ResultActivity.EXTRA_TARGET_SCORE, targetScore)
+            }
+            startActivity(intent)
+            finish()
+        } else {
+            Toast.makeText(this, getString(R.string.match_over, player1Name, score1, score2), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun addScore(player: Int) {
