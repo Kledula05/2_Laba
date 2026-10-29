@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ustenko.R
@@ -173,25 +172,22 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun finishMatch() {
-        if (mode == GameMode.DUO) {
-            val intent = Intent(this, ResultActivity::class.java).apply {
-                putExtra(ResultActivity.EXTRA_PLAYER1_NAME, player1Name)
-                putExtra(ResultActivity.EXTRA_PLAYER2_NAME, player2Name)
-                putExtra(ResultActivity.EXTRA_SCORE1, score1)
-                putExtra(ResultActivity.EXTRA_SCORE2, score2)
-                putExtra(ResultActivity.EXTRA_AVG1, reactions1.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
-                putExtra(ResultActivity.EXTRA_AVG2, reactions2.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
-                putExtra(ResultActivity.EXTRA_BEST1, reactions1.minOrNull() ?: ResultActivity.NO_DATA)
-                putExtra(ResultActivity.EXTRA_BEST2, reactions2.minOrNull() ?: ResultActivity.NO_DATA)
-                putExtra(ResultActivity.EXTRA_FALSESTARTS1, falseStarts1)
-                putExtra(ResultActivity.EXTRA_FALSESTARTS2, falseStarts2)
-                putExtra(ResultActivity.EXTRA_TARGET_SCORE, targetScore)
-            }
-            startActivity(intent)
-            finish()
-        } else {
-            Toast.makeText(this, getString(R.string.match_over, player1Name, score1, score2), Toast.LENGTH_LONG).show()
+        val intent = Intent(this, ResultActivity::class.java).apply {
+            putExtra(ResultActivity.EXTRA_MODE, mode.name)
+            putExtra(ResultActivity.EXTRA_PLAYER1_NAME, player1Name)
+            putExtra(ResultActivity.EXTRA_PLAYER2_NAME, player2Name)
+            putExtra(ResultActivity.EXTRA_SCORE1, score1)
+            putExtra(ResultActivity.EXTRA_SCORE2, score2)
+            putExtra(ResultActivity.EXTRA_AVG1, reactions1.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_AVG2, reactions2.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_BEST1, reactions1.minOrNull() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_BEST2, reactions2.minOrNull() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_FALSESTARTS1, falseStarts1)
+            putExtra(ResultActivity.EXTRA_FALSESTARTS2, falseStarts2)
+            putExtra(ResultActivity.EXTRA_TARGET_SCORE, targetScore)
         }
+        startActivity(intent)
+        finish()
     }
 
     private fun addScore(player: Int) {

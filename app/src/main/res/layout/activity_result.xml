@@ -31,6 +31,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -128,6 +129,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/avgContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -192,6 +194,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/bestContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -255,6 +258,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/falseStartsContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

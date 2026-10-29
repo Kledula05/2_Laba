@@ -11,16 +11,19 @@
 
     <string name="btn_play">Играть</string>
 
+    <string name="history_title">Последние матчи</string>
     <string name="history_empty">Сыграйте первый матч</string>
+    <string name="history_vs">%1$s vs %2$s</string>
+    <string name="history_date_today">Сегодня, %1$s</string>
+    <string name="history_date_yesterday">Вчера, %1$s</string>
 
     <string name="round_ready">Приготовьтесь…</string>
     <string name="round_signal">ЖМИ!</string>
     <string name="round_falsestart">Фальстарт!</string>
     <string name="round_point">+1 · %1$d мс</string>
-    <string name="match_over">Матч окончен! %1$s — %2$d:%3$d</string>
-
     <string name="result_trophy">🏆</string>
     <string name="result_win_label">Победа!</string>
+    <string name="result_practice_label">Тренировка завершена!</string>
     <string name="result_stat_avg">Среднее время</string>
     <string name="result_stat_best">Лучшее время</string>
     <string name="result_stat_falsestarts">Фальстартов</string>
