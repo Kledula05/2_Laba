@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "matches")
 data class Match(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val mode: String,
     val player1Name: String,
     val player2Name: String,
     val score1: Int,

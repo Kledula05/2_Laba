@@ -14,6 +14,7 @@
     <string name="history_title">Последние матчи</string>
     <string name="history_empty">Сыграйте первый матч</string>
     <string name="history_vs">%1$s vs %2$s</string>
+    <string name="history_single">%1$s · тренировка</string>
     <string name="history_date_today">Сегодня, %1$s</string>
     <string name="history_date_yesterday">Вчера, %1$s</string>
 
@@ -32,4 +33,21 @@
     <string name="btn_rematch">Реванш</string>
     <string name="ms_format">%d мс</string>
     <string name="score_format">%1$d : %2$d</string>
+
+    <string name="settings_title">Настройки</string>
+    <string name="settings_back">Назад</string>
+    <string name="settings_section_game">Игра</string>
+    <string name="settings_sound">Звуковой сигнал</string>
+    <string name="settings_vibration">Вибрация при сигнале</string>
+    <string name="settings_section_data">Данные</string>
+    <string name="settings_clear_history">Очистить историю матчей</string>
+    <string name="settings_clear_confirm_title">Очистить историю?</string>
+    <string name="settings_clear_confirm_message">Все сохранённые матчи будут удалены без возможности восстановления.</string>
+    <string name="settings_clear_confirm_yes">Очистить</string>
+    <string name="settings_clear_confirm_cancel">Отмена</string>
+    <string name="settings_cleared_toast">История очищена</string>
+
+    <string name="pause_title">Пауза</string>
+    <string name="pause_resume">Продолжить</string>
+    <string name="pause_exit_menu">Выйти в меню</string>
 </resources>

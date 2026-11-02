@@ -12,4 +12,7 @@ interface MatchDao {
 
     @Query("SELECT * FROM matches ORDER BY playedAt DESC LIMIT :limit")
     suspend fun getRecent(limit: Int): List<Match>
+
+    @Query("DELETE FROM matches")
+    suspend fun clear()
 }

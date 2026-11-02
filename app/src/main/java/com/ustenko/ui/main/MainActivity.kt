@@ -16,9 +16,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.ustenko.R
 import com.ustenko.data.AppDatabase
+import com.ustenko.data.AppPreferences
 import com.ustenko.data.Match
 import com.ustenko.model.GameMode
 import com.ustenko.ui.game.GameActivity
+import com.ustenko.ui.settings.SettingsActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPlay: Button
     private lateinit var tvHistoryPlaceholder: TextView
     private lateinit var llHistoryList: LinearLayout
+    private lateinit var preferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,15 @@ class MainActivity : AppCompatActivity() {
         btnPlay = findViewById(R.id.btnPlay)
         tvHistoryPlaceholder = findViewById(R.id.tvHistoryPlaceholder)
         llHistoryList = findViewById(R.id.llHistoryList)
+        preferences = AppPreferences(this)
+
+        etPlayer1Name.setText(preferences.lastPlayer1Name)
+        etPlayer2Name.setText(preferences.lastPlayer2Name)
+        when (preferences.lastTargetScore) {
+            3 -> rgScore.check(R.id.rbScore3)
+            7 -> rgScore.check(R.id.rbScore7)
+            else -> rgScore.check(R.id.rbScore5)
+        }
 
         rgMode.setOnCheckedChangeListener { _, checkedId ->
             etPlayer2Name.visibility = if (checkedId == R.id.rbDuo) View.VISIBLE else View.GONE
@@ -58,6 +70,10 @@ class MainActivity : AppCompatActivity() {
 
         btnPlay.setOnClickListener {
             onPlayClicked()
+        }
+
+        findViewById<View>(R.id.btnSettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -84,10 +100,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun createHistoryItemView(match: Match): View {
         val view = LayoutInflater.from(this).inflate(R.layout.item_match_history, llHistoryList, false)
-        view.findViewById<TextView>(R.id.tvHistoryNames).text =
-            getString(R.string.history_vs, match.player1Name, match.player2Name)
-        view.findViewById<TextView>(R.id.tvHistoryScore).text =
-            getString(R.string.score_format, match.score1, match.score2)
+
+        if (match.mode == GameMode.DUO.name) {
+            view.findViewById<TextView>(R.id.tvHistoryNames).text =
+                getString(R.string.history_vs, match.player1Name, match.player2Name)
+            view.findViewById<TextView>(R.id.tvHistoryScore).text =
+                getString(R.string.score_format, match.score1, match.score2)
+        } else {
+            view.findViewById<TextView>(R.id.tvHistoryNames).text =
+                getString(R.string.history_single, match.player1Name)
+            view.findViewById<TextView>(R.id.tvHistoryScore).text =
+                if (match.bestReaction > 0) getString(R.string.ms_format, match.bestReaction.toInt()) else "—"
+        }
+
         view.findViewById<TextView>(R.id.tvHistoryDate).text = formatPlayedAt(match.playedAt)
         return view
     }
@@ -122,6 +147,10 @@ class MainActivity : AppCompatActivity() {
             R.id.rbScore7 -> 7
             else -> 5
         }
+
+        preferences.lastPlayer1Name = etPlayer1Name.text.toString()
+        preferences.lastPlayer2Name = etPlayer2Name.text.toString()
+        preferences.lastTargetScore = targetScore
 
         val intent = Intent(this, GameActivity::class.java).apply {
             putExtra(GameActivity.EXTRA_MODE, mode.name)

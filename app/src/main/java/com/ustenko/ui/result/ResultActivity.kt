@@ -77,14 +77,14 @@ class ResultActivity : AppCompatActivity() {
                 falseStarts1.toLong(), falseStarts2.toLong(),
                 R.id.tvFalseStarts1, R.id.tvFalseStarts2, R.id.starFalseStarts1, R.id.starFalseStarts2
             )
-
-            saveMatch(player1Name, player2Name, score1, score2, targetScore, avg1, avg2, best1, best2, falseStarts1, falseStarts2)
         } else {
             findViewById<View>(R.id.tvPlayer2Header).visibility = View.GONE
             findViewById<View>(R.id.avgContainer2).visibility = View.GONE
             findViewById<View>(R.id.bestContainer2).visibility = View.GONE
             findViewById<View>(R.id.falseStartsContainer2).visibility = View.GONE
         }
+
+        saveMatch(mode, player1Name, player2Name, score1, score2, targetScore, avg1, avg2, best1, best2, falseStarts1, falseStarts2)
 
         findViewById<View>(R.id.btnRematch).setOnClickListener {
             val intent = Intent(this, GameActivity::class.java).apply {
@@ -107,6 +107,7 @@ class ResultActivity : AppCompatActivity() {
     }
 
     private fun saveMatch(
+        mode: GameMode,
         player1Name: String,
         player2Name: String,
         score1: Int,
@@ -120,16 +121,17 @@ class ResultActivity : AppCompatActivity() {
         falseStarts2: Int
     ) {
         val match = Match(
+            mode = mode.name,
             player1Name = player1Name,
-            player2Name = player2Name,
+            player2Name = if (mode == GameMode.DUO) player2Name else "",
             score1 = score1,
-            score2 = score2,
+            score2 = if (mode == GameMode.DUO) score2 else 0,
             targetScore = targetScore,
             avgReaction1 = avg1.takeIf { it != NO_DATA } ?: 0L,
-            avgReaction2 = avg2.takeIf { it != NO_DATA } ?: 0L,
+            avgReaction2 = if (mode == GameMode.DUO) avg2.takeIf { it != NO_DATA } ?: 0L else 0L,
             bestReaction = minOf(best1.takeIf { it != NO_DATA } ?: Long.MAX_VALUE, best2.takeIf { it != NO_DATA } ?: Long.MAX_VALUE)
                 .takeIf { it != Long.MAX_VALUE } ?: 0L,
-            falseStarts = "$falseStarts1,$falseStarts2",
+            falseStarts = if (mode == GameMode.DUO) "$falseStarts1,$falseStarts2" else falseStarts1.toString(),
             playedAt = System.currentTimeMillis()
         )
         lifecycleScope.launch(Dispatchers.IO) {

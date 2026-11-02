@@ -1,18 +1,27 @@
 package com.ustenko.ui.game
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ustenko.R
+import com.ustenko.data.AppPreferences
 import com.ustenko.model.GameMode
+import com.ustenko.ui.main.MainActivity
 import com.ustenko.ui.result.ResultActivity
 import kotlin.random.Random
 
@@ -57,9 +66,14 @@ class GameActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val signalRunnable = Runnable { showSignal() }
 
+    private lateinit var preferences: AppPreferences
+    private var toneGenerator: ToneGenerator? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        preferences = AppPreferences(this)
 
         mode = GameMode.valueOf(intent.getStringExtra(EXTRA_MODE) ?: GameMode.DUO.name)
         player1Name = intent.getStringExtra(EXTRA_PLAYER1_NAME) ?: getString(R.string.player1_hint)
@@ -94,12 +108,35 @@ class GameActivity : AppCompatActivity() {
             topHalf.visibility = View.GONE
         }
 
+        onBackPressedDispatcher.addCallback(this) {
+            showPauseDialog()
+        }
+
         startRound()
+    }
+
+    private fun showPauseDialog() {
+        handler.removeCallbacksAndMessages(null)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.pause_title)
+            .setCancelable(false)
+            .setPositiveButton(R.string.pause_resume) { _, _ -> startRound() }
+            .setNegativeButton(R.string.pause_exit_menu) { _, _ -> exitToMenu() }
+            .show()
+    }
+
+    private fun exitToMenu() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+        toneGenerator?.release()
     }
 
     private fun startRound() {
@@ -122,6 +159,24 @@ class GameActivity : AppCompatActivity() {
             setHalfColor(2, R.color.round_signal)
             setStatus(2, getString(R.string.round_signal))
         }
+
+        if (preferences.vibrationEnabled) vibrateDevice()
+        if (preferences.soundEnabled) playSignalSound()
+    }
+
+    private fun vibrateDevice() {
+        val vibrator = ContextCompat.getSystemService(this, Vibrator::class.java) ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(150)
+        }
+    }
+
+    private fun playSignalSound() {
+        val generator = toneGenerator ?: ToneGenerator(AudioManager.STREAM_MUSIC, 80).also { toneGenerator = it }
+        generator.startTone(ToneGenerator.TONE_PROP_BEEP, 150)
     }
 
     private fun onHalfTouched(player: Int) {
