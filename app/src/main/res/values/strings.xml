@@ -3,11 +3,19 @@
 
     <string name="mode_single">Одиночный</string>
     <string name="mode_duo">Парный</string>
+    <string name="mode_select_title">Выберите режим игры</string>
+    <string name="mode_select_subtitle">Можно сыграть одному или вдвоём на одном телефоне</string>
+    <string name="mode_single_desc">Тренировка скорости реакции</string>
+    <string name="mode_duo_desc">Дуэль вдвоём на одном устройстве</string>
+    <string name="icon_single">👤</string>
+    <string name="icon_duo">👥</string>
+    <string name="icon_check">✓</string>
+    <string name="btn_continue">Продолжить</string>
 
     <string name="player1_hint">Игрок 1</string>
     <string name="player2_hint">Игрок 2</string>
 
-    <string name="score_label">До скольких очков:</string>
+    <string name="score_label">Матч до скольких очков</string>
 
     <string name="btn_play">Играть</string>
 
@@ -36,6 +44,12 @@
 
     <string name="settings_title">Настройки</string>
     <string name="settings_back">Назад</string>
+    <string name="settings_section_appearance">Внешний вид</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_value">Русский</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_value">Системная</string>
+    <string name="settings_appearance_unavailable">Будет доступно в следующей лабораторной работе</string>
     <string name="settings_section_game">Игра</string>
     <string name="settings_sound">Звуковой сигнал</string>
     <string name="settings_vibration">Вибрация при сигнале</string>
@@ -46,6 +60,9 @@
     <string name="settings_clear_confirm_yes">Очистить</string>
     <string name="settings_clear_confirm_cancel">Отмена</string>
     <string name="settings_cleared_toast">История очищена</string>
+    <string name="settings_section_about">О приложении</string>
+    <string name="settings_version">Версия</string>
+    <string name="settings_version_value">1.0.0</string>
 
     <string name="pause_title">Пауза</string>
     <string name="pause_resume">Продолжить</string>

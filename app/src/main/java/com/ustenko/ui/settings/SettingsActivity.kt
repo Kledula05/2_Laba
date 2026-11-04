@@ -2,8 +2,8 @@ package com.ustenko.ui.settings
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +23,10 @@ class SettingsActivity : AppCompatActivity() {
 
         preferences = AppPreferences(this)
 
-        findViewById<TextView>(R.id.btnBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+
+        findViewById<View>(R.id.rowLanguage).setOnClickListener { showAppearanceUnavailable() }
+        findViewById<View>(R.id.rowTheme).setOnClickListener { showAppearanceUnavailable() }
 
         val swSound = findViewById<Switch>(R.id.swSound)
         swSound.isChecked = preferences.soundEnabled
@@ -37,9 +40,13 @@ class SettingsActivity : AppCompatActivity() {
             preferences.vibrationEnabled = isChecked
         }
 
-        findViewById<TextView>(R.id.btnClearHistory).setOnClickListener {
+        findViewById<View>(R.id.btnClearHistory).setOnClickListener {
             confirmClearHistory()
         }
+    }
+
+    private fun showAppearanceUnavailable() {
+        Toast.makeText(this, R.string.settings_appearance_unavailable, Toast.LENGTH_SHORT).show()
     }
 
     private fun confirmClearHistory() {

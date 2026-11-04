@@ -13,4 +13,7 @@
     <color name="text_secondary">#6B7280</color>
     <color name="divider_gray">#E5E7EB</color>
     <color name="gold_star">#FFC107</color>
+
+    <color name="icon_bg_gray">#F0F1F3</color>
+    <color name="card_selected_bg">#EAF0FE</color>
 </resources>

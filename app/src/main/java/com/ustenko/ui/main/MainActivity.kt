@@ -7,10 +7,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -28,14 +28,24 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var rgMode: RadioGroup
+    companion object {
+        const val EXTRA_MODE = "extra_mode"
+    }
+
+    private lateinit var mode: GameMode
+
     private lateinit var etPlayer1Name: EditText
     private lateinit var etPlayer2Name: EditText
-    private lateinit var rgScore: RadioGroup
+    private lateinit var llPlayer2Block: View
     private lateinit var btnPlay: Button
     private lateinit var tvHistoryPlaceholder: TextView
     private lateinit var llHistoryList: LinearLayout
     private lateinit var preferences: AppPreferences
+
+    private lateinit var chipScore3: TextView
+    private lateinit var chipScore5: TextView
+    private lateinit var chipScore7: TextView
+    private var selectedScore = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,26 +57,30 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        rgMode = findViewById(R.id.rgMode)
+        mode = GameMode.valueOf(intent.getStringExtra(EXTRA_MODE) ?: GameMode.DUO.name)
+
         etPlayer1Name = findViewById(R.id.etPlayer1Name)
         etPlayer2Name = findViewById(R.id.etPlayer2Name)
-        rgScore = findViewById(R.id.rgScore)
+        llPlayer2Block = findViewById(R.id.llPlayer2Block)
         btnPlay = findViewById(R.id.btnPlay)
         tvHistoryPlaceholder = findViewById(R.id.tvHistoryPlaceholder)
         llHistoryList = findViewById(R.id.llHistoryList)
         preferences = AppPreferences(this)
 
+        chipScore3 = findViewById(R.id.chipScore3)
+        chipScore5 = findViewById(R.id.chipScore5)
+        chipScore7 = findViewById(R.id.chipScore7)
+
+        llPlayer2Block.visibility = if (mode == GameMode.DUO) View.VISIBLE else View.GONE
+
         etPlayer1Name.setText(preferences.lastPlayer1Name)
         etPlayer2Name.setText(preferences.lastPlayer2Name)
-        when (preferences.lastTargetScore) {
-            3 -> rgScore.check(R.id.rbScore3)
-            7 -> rgScore.check(R.id.rbScore7)
-            else -> rgScore.check(R.id.rbScore5)
-        }
+        selectedScore = preferences.lastTargetScore
+        updateScoreChips()
 
-        rgMode.setOnCheckedChangeListener { _, checkedId ->
-            etPlayer2Name.visibility = if (checkedId == R.id.rbDuo) View.VISIBLE else View.GONE
-        }
+        chipScore3.setOnClickListener { selectedScore = 3; updateScoreChips() }
+        chipScore5.setOnClickListener { selectedScore = 5; updateScoreChips() }
+        chipScore7.setOnClickListener { selectedScore = 7; updateScoreChips() }
 
         btnPlay.setOnClickListener {
             onPlayClicked()
@@ -80,6 +94,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadHistory()
+    }
+
+    private fun updateScoreChips() {
+        setChipSelected(chipScore3, selectedScore == 3)
+        setChipSelected(chipScore5, selectedScore == 5)
+        setChipSelected(chipScore7, selectedScore == 7)
+    }
+
+    private fun setChipSelected(chip: TextView, selected: Boolean) {
+        chip.setBackgroundResource(if (selected) R.drawable.bg_button_filled else R.drawable.bg_button_outline)
+        chip.setTextColor(ContextCompat.getColor(this, if (selected) R.color.white else R.color.black))
     }
 
     private fun loadHistory() {
@@ -137,26 +162,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onPlayClicked() {
-        val mode = if (rgMode.checkedRadioButtonId == R.id.rbDuo) GameMode.DUO else GameMode.SINGLE
-
         val player1Name = etPlayer1Name.text.toString().ifBlank { getString(R.string.player1_hint) }
         val player2Name = etPlayer2Name.text.toString().ifBlank { getString(R.string.player2_hint) }
 
-        val targetScore = when (rgScore.checkedRadioButtonId) {
-            R.id.rbScore3 -> 3
-            R.id.rbScore7 -> 7
-            else -> 5
-        }
-
         preferences.lastPlayer1Name = etPlayer1Name.text.toString()
         preferences.lastPlayer2Name = etPlayer2Name.text.toString()
-        preferences.lastTargetScore = targetScore
+        preferences.lastTargetScore = selectedScore
 
         val intent = Intent(this, GameActivity::class.java).apply {
             putExtra(GameActivity.EXTRA_MODE, mode.name)
             putExtra(GameActivity.EXTRA_PLAYER1_NAME, player1Name)
             putExtra(GameActivity.EXTRA_PLAYER2_NAME, player2Name)
-            putExtra(GameActivity.EXTRA_TARGET_SCORE, targetScore)
+            putExtra(GameActivity.EXTRA_TARGET_SCORE, selectedScore)
         }
         startActivity(intent)
     }

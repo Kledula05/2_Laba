@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screen_background"
     android:fillViewport="true"
     tools:context=".MainActivity">
 
@@ -19,27 +20,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/app_name"
-            android:textSize="28sp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageView
             android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="⚙"
-            android:textColor="@color/black"
-            android:textSize="22sp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_settings"
             app:layout_constraintBottom_toBottomOf="@id/tvTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
-        <RadioGroup
-            android:id="@+id/rgMode"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llNamesRow"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
@@ -47,42 +45,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle">
 
-            <RadioButton
-                android:id="@+id/rbSingle"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/mode_single" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/rbDuo"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player1_hint"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPlayer1Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_card"
+                    android:inputType="textPersonName"
+                    android:padding="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llPlayer2Block"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:checked="true"
-                android:text="@string/mode_duo" />
-        </RadioGroup>
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/etPlayer1Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:hint="@string/player1_hint"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rgMode" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/player2_hint"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
 
-        <EditText
-            android:id="@+id/etPlayer2Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="@string/player2_hint"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPlayer1Name" />
+                <EditText
+                    android:id="@+id/etPlayer2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_card"
+                    android:inputType="textPersonName"
+                    android:padding="12dp" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvScoreLabel"
@@ -90,50 +102,78 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/score_label"
+            android:textAllCaps="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etPlayer2Name" />
+            app:layout_constraintTop_toBottomOf="@id/llNamesRow" />
 
-        <RadioGroup
-            android:id="@+id/rgScore"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llScoreChips"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvScoreLabel">
 
-            <RadioButton
-                android:id="@+id/rbScore3"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/chipScore3"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="3" />
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_outline"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="3"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/rbScore5"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/chipScore5"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:checked="true"
-                android:text="5" />
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_filled"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-            <RadioButton
-                android:id="@+id/rbScore7"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/chipScore7"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="7" />
-        </RadioGroup>
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_outline"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="7"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnPlay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button_filled"
             android:text="@string/btn_play"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rgScore" />
+            app:layout_constraintTop_toBottomOf="@id/llScoreChips" />
 
         <TextView
             android:id="@+id/tvHistoryTitle"
@@ -141,7 +181,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/history_title"
+            android:textAllCaps="true"
             android:textColor="@color/text_secondary"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnPlay" />
 
