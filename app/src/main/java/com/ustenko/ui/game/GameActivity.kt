@@ -1,0 +1,268 @@
+package com.ustenko.ui.game
+
+import android.app.AlertDialog
+import android.content.Intent
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.view.MotionEvent
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.ustenko.R
+import com.ustenko.data.AppPreferences
+import com.ustenko.model.GameMode
+import com.ustenko.ui.main.MainActivity
+import com.ustenko.ui.result.ResultActivity
+import kotlin.random.Random
+
+class GameActivity : AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_MODE = "extra_mode"
+        const val EXTRA_PLAYER1_NAME = "extra_player1_name"
+        const val EXTRA_PLAYER2_NAME = "extra_player2_name"
+        const val EXTRA_TARGET_SCORE = "extra_target_score"
+
+        private const val ROUND_PAUSE_MS = 1200L
+        private const val MIN_DELAY_MS = 1500L
+        private const val MAX_DELAY_MS = 10000L
+    }
+
+    private enum class RoundPhase { WAITING, SIGNAL, ROUND_OVER }
+
+    private lateinit var mode: GameMode
+    private lateinit var player1Name: String
+    private lateinit var player2Name: String
+    private var targetScore = 5
+
+    private lateinit var topHalf: FrameLayout
+    private lateinit var bottomHalf: FrameLayout
+    private lateinit var tvPlayer1Name: TextView
+    private lateinit var tvPlayer1Score: TextView
+    private lateinit var tvPlayer1Status: TextView
+    private lateinit var tvPlayer2Name: TextView
+    private lateinit var tvPlayer2Score: TextView
+    private lateinit var tvPlayer2Status: TextView
+
+    private var score1 = 0
+    private var score2 = 0
+    private var falseStarts1 = 0
+    private var falseStarts2 = 0
+    private val reactions1 = mutableListOf<Long>()
+    private val reactions2 = mutableListOf<Long>()
+    private var phase = RoundPhase.WAITING
+    private var signalTimeMs = 0L
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val signalRunnable = Runnable { showSignal() }
+
+    private lateinit var preferences: AppPreferences
+    private var toneGenerator: ToneGenerator? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_game)
+
+        preferences = AppPreferences(this)
+
+        mode = GameMode.valueOf(intent.getStringExtra(EXTRA_MODE) ?: GameMode.DUO.name)
+        player1Name = intent.getStringExtra(EXTRA_PLAYER1_NAME) ?: getString(R.string.player1_hint)
+        player2Name = intent.getStringExtra(EXTRA_PLAYER2_NAME) ?: getString(R.string.player2_hint)
+        targetScore = intent.getIntExtra(EXTRA_TARGET_SCORE, 5)
+
+        topHalf = findViewById(R.id.topHalf)
+        bottomHalf = findViewById(R.id.bottomHalf)
+        tvPlayer1Name = findViewById(R.id.tvPlayer1Name)
+        tvPlayer1Score = findViewById(R.id.tvPlayer1Score)
+        tvPlayer1Status = findViewById(R.id.tvPlayer1Status)
+        tvPlayer2Name = findViewById(R.id.tvPlayer2Name)
+        tvPlayer2Score = findViewById(R.id.tvPlayer2Score)
+        tvPlayer2Status = findViewById(R.id.tvPlayer2Status)
+
+        tvPlayer1Name.text = player1Name
+        tvPlayer1Score.text = score1.toString()
+
+        bottomHalf.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) onHalfTouched(1)
+            true
+        }
+
+        if (mode == GameMode.DUO) {
+            tvPlayer2Name.text = player2Name
+            tvPlayer2Score.text = score2.toString()
+            topHalf.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) onHalfTouched(2)
+                true
+            }
+        } else {
+            topHalf.visibility = View.GONE
+        }
+
+        onBackPressedDispatcher.addCallback(this) {
+            showPauseDialog()
+        }
+
+        startRound()
+    }
+
+    private fun showPauseDialog() {
+        handler.removeCallbacksAndMessages(null)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.pause_title)
+            .setCancelable(false)
+            .setPositiveButton(R.string.pause_resume) { _, _ -> startRound() }
+            .setNegativeButton(R.string.pause_exit_menu) { _, _ -> exitToMenu() }
+            .show()
+    }
+
+    private fun exitToMenu() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+        toneGenerator?.release()
+    }
+
+    private fun startRound() {
+        phase = RoundPhase.WAITING
+        setHalfColor(1, R.color.round_waiting)
+        setStatus(1, getString(R.string.round_ready))
+        if (mode == GameMode.DUO) {
+            setHalfColor(2, R.color.round_waiting)
+            setStatus(2, getString(R.string.round_ready))
+        }
+        handler.postDelayed(signalRunnable, Random.nextLong(MIN_DELAY_MS, MAX_DELAY_MS + 1))
+    }
+
+    private fun showSignal() {
+        phase = RoundPhase.SIGNAL
+        signalTimeMs = SystemClock.elapsedRealtime()
+        setHalfColor(1, R.color.round_signal)
+        setStatus(1, getString(R.string.round_signal))
+        if (mode == GameMode.DUO) {
+            setHalfColor(2, R.color.round_signal)
+            setStatus(2, getString(R.string.round_signal))
+        }
+
+        if (preferences.vibrationEnabled) vibrateDevice()
+        if (preferences.soundEnabled) playSignalSound()
+    }
+
+    private fun vibrateDevice() {
+        val vibrator = ContextCompat.getSystemService(this, Vibrator::class.java) ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(150)
+        }
+    }
+
+    private fun playSignalSound() {
+        val generator = toneGenerator ?: ToneGenerator(AudioManager.STREAM_MUSIC, 80).also { toneGenerator = it }
+        generator.startTone(ToneGenerator.TONE_PROP_BEEP, 150)
+    }
+
+    private fun onHalfTouched(player: Int) {
+        when (phase) {
+            RoundPhase.WAITING -> handleFalseStart(player)
+            RoundPhase.SIGNAL -> handleScore(player)
+            RoundPhase.ROUND_OVER -> Unit
+        }
+    }
+
+    private fun handleFalseStart(player: Int) {
+        handler.removeCallbacks(signalRunnable)
+        phase = RoundPhase.ROUND_OVER
+        setHalfColor(player, R.color.round_falsestart)
+        setStatus(player, getString(R.string.round_falsestart))
+        if (player == 1) falseStarts1++ else falseStarts2++
+
+        if (mode == GameMode.DUO) {
+            addScore(otherPlayer(player))
+            handler.postDelayed({ nextRoundOrFinish() }, ROUND_PAUSE_MS)
+        } else {
+            handler.postDelayed({ startRound() }, ROUND_PAUSE_MS)
+        }
+    }
+
+    private fun handleScore(player: Int) {
+        phase = RoundPhase.ROUND_OVER
+        val reactionMs = SystemClock.elapsedRealtime() - signalTimeMs
+        addScore(player)
+        if (player == 1) reactions1.add(reactionMs) else reactions2.add(reactionMs)
+        setHalfColor(player, R.color.round_win)
+        setStatus(player, getString(R.string.round_point, reactionMs.toInt()))
+
+        if (mode == GameMode.DUO) {
+            setHalfColor(otherPlayer(player), R.color.round_waiting)
+            setStatus(otherPlayer(player), "")
+        }
+
+        handler.postDelayed({ nextRoundOrFinish() }, ROUND_PAUSE_MS)
+    }
+
+    private fun nextRoundOrFinish() {
+        if (score1 >= targetScore || score2 >= targetScore) {
+            finishMatch()
+        } else {
+            startRound()
+        }
+    }
+
+    private fun finishMatch() {
+        val intent = Intent(this, ResultActivity::class.java).apply {
+            putExtra(ResultActivity.EXTRA_MODE, mode.name)
+            putExtra(ResultActivity.EXTRA_PLAYER1_NAME, player1Name)
+            putExtra(ResultActivity.EXTRA_PLAYER2_NAME, player2Name)
+            putExtra(ResultActivity.EXTRA_SCORE1, score1)
+            putExtra(ResultActivity.EXTRA_SCORE2, score2)
+            putExtra(ResultActivity.EXTRA_AVG1, reactions1.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_AVG2, reactions2.average().takeIf { !it.isNaN() }?.toLong() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_BEST1, reactions1.minOrNull() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_BEST2, reactions2.minOrNull() ?: ResultActivity.NO_DATA)
+            putExtra(ResultActivity.EXTRA_FALSESTARTS1, falseStarts1)
+            putExtra(ResultActivity.EXTRA_FALSESTARTS2, falseStarts2)
+            putExtra(ResultActivity.EXTRA_TARGET_SCORE, targetScore)
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    private fun addScore(player: Int) {
+        if (player == 1) {
+            score1++
+            tvPlayer1Score.text = score1.toString()
+        } else {
+            score2++
+            tvPlayer2Score.text = score2.toString()
+        }
+    }
+
+    private fun otherPlayer(player: Int) = if (player == 1) 2 else 1
+
+    private fun setHalfColor(player: Int, colorRes: Int) {
+        val color = ContextCompat.getColor(this, colorRes)
+        if (player == 1) bottomHalf.setBackgroundColor(color) else topHalf.setBackgroundColor(color)
+    }
+
+    private fun setStatus(player: Int, text: String) {
+        if (player == 1) tvPlayer1Status.text = text else tvPlayer2Status.text = text
+    }
+}
