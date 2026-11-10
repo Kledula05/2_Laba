@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setChipSelected(chip: TextView, selected: Boolean) {
         chip.setBackgroundResource(if (selected) R.drawable.bg_button_filled else R.drawable.bg_button_outline)
-        chip.setTextColor(ContextCompat.getColor(this, if (selected) R.color.white else R.color.black))
+        chip.setTextColor(ContextCompat.getColor(this, if (selected) R.color.white else R.color.text_secondary))
     }
 
     private fun loadHistory() {

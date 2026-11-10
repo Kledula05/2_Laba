@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="40sp"
             android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textStyle="bold" />
 
                 <TextView
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -296,7 +296,7 @@
                 android:background="@drawable/bg_button_outline"
                 android:text="@string/btn_menu"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 app:backgroundTint="@null" />
 
             <View
