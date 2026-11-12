@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MODE = "extra_mode"
+        private const val STATE_SELECTED_SCORE = "selected_score"
     }
 
     private lateinit var mode: GameMode
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         etPlayer1Name.setText(preferences.lastPlayer1Name)
         etPlayer2Name.setText(preferences.lastPlayer2Name)
-        selectedScore = preferences.lastTargetScore
+        selectedScore = savedInstanceState?.getInt(STATE_SELECTED_SCORE) ?: preferences.lastTargetScore
         updateScoreChips()
 
         chipScore3.setOnClickListener { selectedScore = 3; updateScoreChips() }
@@ -94,6 +95,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         loadHistory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(STATE_SELECTED_SCORE, selectedScore)
     }
 
     private fun updateScoreChips() {

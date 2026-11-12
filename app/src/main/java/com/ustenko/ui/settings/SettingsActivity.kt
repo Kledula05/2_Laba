@@ -1,15 +1,18 @@
 package com.ustenko.ui.settings
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ustenko.R
 import com.ustenko.data.AppDatabase
 import com.ustenko.data.AppPreferences
+import com.ustenko.model.AppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,7 +29,9 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
         findViewById<View>(R.id.rowLanguage).setOnClickListener { showAppearanceUnavailable() }
-        findViewById<View>(R.id.rowTheme).setOnClickListener { showAppearanceUnavailable() }
+        val themeValue = findViewById<TextView>(R.id.tvThemeValue)
+        themeValue.setText(preferences.theme.label)
+        findViewById<View>(R.id.rowTheme).setOnClickListener { showThemeDialog(themeValue) }
 
         val swSound = findViewById<Switch>(R.id.swSound)
         swSound.isChecked = preferences.soundEnabled
@@ -49,8 +54,24 @@ class SettingsActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.settings_appearance_unavailable, Toast.LENGTH_SHORT).show()
     }
 
+    private fun showThemeDialog(themeValue: TextView) {
+        val themes = AppTheme.entries
+        val labels = themes.map { getString(it.label) }.toTypedArray()
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.settings_theme)
+            .setSingleChoiceItems(labels, themes.indexOf(preferences.theme)) { dialog, index ->
+                val theme = themes[index]
+                preferences.theme = theme
+                themeValue.setText(theme.label)
+                dialog.dismiss()
+                AppCompatDelegate.setDefaultNightMode(theme.nightMode)
+            }
+            .setNegativeButton(R.string.settings_clear_confirm_cancel, null)
+            .show()
+    }
+
     private fun confirmClearHistory() {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle(R.string.settings_clear_confirm_title)
             .setMessage(R.string.settings_clear_confirm_message)
             .setPositiveButton(R.string.settings_clear_confirm_yes) { _, _ -> clearHistory() }

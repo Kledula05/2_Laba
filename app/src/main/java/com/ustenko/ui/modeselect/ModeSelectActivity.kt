@@ -12,6 +12,7 @@ class ModeSelectActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MODE = "extra_mode"
+        private const val STATE_SELECTED_MODE = "selected_mode"
     }
 
     private var selectedMode = GameMode.DUO
@@ -24,6 +25,7 @@ class ModeSelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mode_select)
+        selectedMode = GameMode.valueOf(savedInstanceState?.getString(STATE_SELECTED_MODE) ?: GameMode.DUO.name)
 
         cardSingle = findViewById(R.id.cardSingle)
         cardDuo = findViewById(R.id.cardDuo)
@@ -41,6 +43,11 @@ class ModeSelectActivity : AppCompatActivity() {
         }
 
         updateSelection()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_SELECTED_MODE, selectedMode.name)
     }
 
     private fun selectMode(mode: GameMode) {

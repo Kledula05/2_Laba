@@ -1,6 +1,5 @@
 package com.ustenko.ui.game
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.media.AudioManager
 import android.media.ToneGenerator
@@ -18,6 +17,7 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ustenko.R
 import com.ustenko.data.AppPreferences
 import com.ustenko.model.GameMode
@@ -117,7 +117,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun showPauseDialog() {
         handler.removeCallbacksAndMessages(null)
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle(R.string.pause_title)
             .setCancelable(false)
             .setPositiveButton(R.string.pause_resume) { _, _ -> startRound() }

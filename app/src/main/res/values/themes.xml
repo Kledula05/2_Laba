@@ -1,20 +1,23 @@
 <resources>
-    <style name="Base.Theme._2_Laba" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/blue_primary</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/blue_primary</item>
-        <item name="colorOnSecondary">@color/white</item>
+    <style name="Base.Theme._2_Laba" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/blue_accent</item>
+        <item name="colorOnPrimary">@color/text_on_accent</item>
+        <item name="colorSecondary">@color/blue_accent</item>
+        <item name="colorOnSecondary">@color/text_on_accent</item>
         <item name="colorSurface">@color/surface</item>
+        <item name="colorSurfaceContainerHigh">@color/surface</item>
         <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
         <item name="android:colorBackground">@color/screen_background</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
-        <item name="android:colorAccent">@color/blue_primary</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorAccent">@color/blue_accent</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
         <item name="android:statusBarColor">@color/screen_background</item>
         <item name="android:navigationBarColor">@color/screen_background</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
     </style>
 
     <style name="Theme._2_Laba" parent="Base.Theme._2_Laba" />
+    <bool name="light_system_bars">true</bool>
 </resources>

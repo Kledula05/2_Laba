@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".ReflexDuelApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -28,6 +29,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.game.GameActivity"
+            android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

@@ -10,6 +10,9 @@
 
     <color name="screen_background">#F1F3F8</color>
     <color name="blue_primary">#2D6BE5</color>
+    <color name="blue_accent">@color/blue_primary</color>
+    <color name="text_on_accent">@color/white</color>
+    <color name="settings_danger">@color/round_falsestart</color>
     <color name="text_primary">#22272F</color>
     <color name="surface">#FFFFFF</color>
     <color name="text_secondary">#6B7280</color>

@@ -41,7 +41,7 @@
             android:layout_marginTop="32dp"
             android:text="@string/settings_section_appearance"
             android:textAllCaps="true"
-            android:textColor="@color/blue_primary"
+            android:textColor="@color/blue_accent"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -120,9 +120,10 @@
                     android:textColor="@color/text_primary" />
 
                 <TextView
+                    android:id="@+id/tvThemeValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_theme_value"
+                    android:text="@string/settings_theme_system"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -139,7 +140,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/settings_section_game"
             android:textAllCaps="true"
-            android:textColor="@color/blue_primary"
+            android:textColor="@color/blue_accent"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -209,7 +210,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/settings_section_data"
             android:textAllCaps="true"
-            android:textColor="@color/blue_primary"
+            android:textColor="@color/blue_accent"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -229,13 +230,13 @@
                 android:layout_height="24dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_delete"
-                app:tint="@color/round_falsestart" />
+                app:tint="@color/settings_danger" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_clear_history"
-                android:textColor="@color/round_falsestart" />
+                android:textColor="@color/settings_danger" />
         </LinearLayout>
 
         <TextView
@@ -244,7 +245,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/settings_section_about"
             android:textAllCaps="true"
-            android:textColor="@color/blue_primary"
+            android:textColor="@color/blue_accent"
             android:textSize="13sp"
             android:textStyle="bold" />
 
