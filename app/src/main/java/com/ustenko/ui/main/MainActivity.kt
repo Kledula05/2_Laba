@@ -24,7 +24,6 @@ import com.ustenko.ui.settings.SettingsActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -149,7 +148,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun formatPlayedAt(timestampMs: Long): String {
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val locale = resources.configuration.locales[0]
+        val timeFormat = SimpleDateFormat("HH:mm", locale)
         val time = timeFormat.format(timestampMs)
 
         val played = Calendar.getInstance().apply { timeInMillis = timestampMs }
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         return when {
             isSameDay(played, today) -> getString(R.string.history_date_today, time)
             isSameDay(played, yesterday) -> getString(R.string.history_date_yesterday, time)
-            else -> SimpleDateFormat("dd.MM, HH:mm", Locale.getDefault()).format(timestampMs)
+            else -> SimpleDateFormat("dd.MM, HH:mm", locale).format(timestampMs)
         }
     }
 

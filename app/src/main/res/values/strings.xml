@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reflex Duel</string>
+    <string name="app_name" translatable="false">Reflex Duel</string>
 
     <string name="mode_single">Одиночный</string>
     <string name="mode_duo">Парный</string>
@@ -7,9 +7,9 @@
     <string name="mode_select_subtitle">Можно сыграть одному или вдвоём на одном телефоне</string>
     <string name="mode_single_desc">Тренировка скорости реакции</string>
     <string name="mode_duo_desc">Дуэль вдвоём на одном устройстве</string>
-    <string name="icon_single">👤</string>
-    <string name="icon_duo">👥</string>
-    <string name="icon_check">✓</string>
+    <string name="icon_single" translatable="false">👤</string>
+    <string name="icon_duo" translatable="false">👥</string>
+    <string name="icon_check" translatable="false">✓</string>
     <string name="btn_continue">Продолжить</string>
 
     <string name="player1_hint">Игрок 1</string>
@@ -21,7 +21,7 @@
 
     <string name="history_title">Последние матчи</string>
     <string name="history_empty">Сыграйте первый матч</string>
-    <string name="history_vs">%1$s vs %2$s</string>
+    <string name="history_vs" translatable="false">%1$s vs %2$s</string>
     <string name="history_single">%1$s · тренировка</string>
     <string name="history_date_today">Сегодня, %1$s</string>
     <string name="history_date_yesterday">Вчера, %1$s</string>
@@ -30,28 +30,29 @@
     <string name="round_signal">ЖМИ!</string>
     <string name="round_falsestart">Фальстарт!</string>
     <string name="round_point">+1 · %1$d мс</string>
-    <string name="result_trophy">🏆</string>
+    <string name="result_trophy" translatable="false">🏆</string>
     <string name="result_win_label">Победа!</string>
     <string name="result_practice_label">Тренировка завершена!</string>
     <string name="result_stat_avg">Среднее время</string>
     <string name="result_stat_best">Лучшее время</string>
     <string name="result_stat_falsestarts">Фальстартов</string>
-    <string name="result_star">★</string>
+    <string name="result_star" translatable="false">★</string>
     <string name="btn_menu">В меню</string>
     <string name="btn_rematch">Реванш</string>
     <string name="ms_format">%d мс</string>
-    <string name="score_format">%1$d : %2$d</string>
+    <string name="score_format" translatable="false">%1$d : %2$d</string>
 
     <string name="settings_title">Настройки</string>
     <string name="settings_back">Назад</string>
     <string name="settings_section_appearance">Внешний вид</string>
     <string name="settings_language">Язык</string>
-    <string name="settings_language_value">Русский</string>
+    <string name="settings_language_value">@string/language_russian</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_english" translatable="false">English</string>
     <string name="settings_theme">Тема</string>
     <string name="settings_theme_light">Светлая</string>
     <string name="settings_theme_dark">Тёмная</string>
     <string name="settings_theme_system">Системная</string>
-    <string name="settings_appearance_unavailable">Будет доступно в следующей лабораторной работе</string>
     <string name="settings_section_game">Игра</string>
     <string name="settings_sound">Звуковой сигнал</string>
     <string name="settings_vibration">Вибрация при сигнале</string>
@@ -60,11 +61,11 @@
     <string name="settings_clear_confirm_title">Очистить историю?</string>
     <string name="settings_clear_confirm_message">Все сохранённые матчи будут удалены без возможности восстановления.</string>
     <string name="settings_clear_confirm_yes">Очистить</string>
-    <string name="settings_clear_confirm_cancel">Отмена</string>
+    <string name="btn_cancel">Отмена</string>
     <string name="settings_cleared_toast">История очищена</string>
     <string name="settings_section_about">О приложении</string>
     <string name="settings_version">Версия</string>
-    <string name="settings_version_value">1.0.0</string>
+    <string name="settings_version_value" translatable="false">1.0.0</string>
 
     <string name="pause_title">Пауза</string>
     <string name="pause_resume">Продолжить</string>

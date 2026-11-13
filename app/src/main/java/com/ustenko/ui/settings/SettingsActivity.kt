@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ustenko.R
@@ -28,7 +29,7 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
-        findViewById<View>(R.id.rowLanguage).setOnClickListener { showAppearanceUnavailable() }
+        findViewById<View>(R.id.rowLanguage).setOnClickListener { showLanguageDialog() }
         val themeValue = findViewById<TextView>(R.id.tvThemeValue)
         themeValue.setText(preferences.theme.label)
         findViewById<View>(R.id.rowTheme).setOnClickListener { showThemeDialog(themeValue) }
@@ -50,8 +51,19 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAppearanceUnavailable() {
-        Toast.makeText(this, R.string.settings_appearance_unavailable, Toast.LENGTH_SHORT).show()
+    private fun showLanguageDialog() {
+        val languages = arrayOf("ru", "en")
+        val labels = arrayOf(getString(R.string.language_russian), getString(R.string.language_english))
+        val selected = labels.indexOf(getString(R.string.settings_language_value))
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.settings_language)
+            .setSingleChoiceItems(labels, selected) { dialog, index ->
+                dialog.dismiss()
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languages[index]))
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
     }
 
     private fun showThemeDialog(themeValue: TextView) {
@@ -66,7 +78,7 @@ class SettingsActivity : AppCompatActivity() {
                 dialog.dismiss()
                 AppCompatDelegate.setDefaultNightMode(theme.nightMode)
             }
-            .setNegativeButton(R.string.settings_clear_confirm_cancel, null)
+            .setNegativeButton(R.string.btn_cancel, null)
             .show()
     }
 
@@ -75,7 +87,7 @@ class SettingsActivity : AppCompatActivity() {
             .setTitle(R.string.settings_clear_confirm_title)
             .setMessage(R.string.settings_clear_confirm_message)
             .setPositiveButton(R.string.settings_clear_confirm_yes) { _, _ -> clearHistory() }
-            .setNegativeButton(R.string.settings_clear_confirm_cancel, null)
+            .setNegativeButton(R.string.btn_cancel, null)
             .show()
     }
 
