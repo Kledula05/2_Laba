@@ -4,16 +4,22 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="round_waiting">#9E9E9E</color>
-    <color name="round_signal">#4CAF50</color>
+    <color name="round_signal">#2FB170</color>
     <color name="round_falsestart">#F44336</color>
     <color name="round_win">#FFC107</color>
 
-    <color name="screen_background">#F2F3F7</color>
-    <color name="blue_primary">#3D6AF2</color>
+    <color name="screen_background">#F2F4F8</color>
+    <color name="blue_primary">#2D6CDF</color>
+    <color name="blue_accent">@color/blue_primary</color>
+    <color name="text_on_accent">@color/white</color>
+    <color name="settings_danger">#E5484D</color>
+    <color name="text_primary">#20242C</color>
+    <color name="surface">#FFFFFF</color>
     <color name="text_secondary">#6B7280</color>
-    <color name="divider_gray">#E5E7EB</color>
-    <color name="gold_star">#FFC107</color>
+    <color name="divider_gray">#E2E5EA</color>
+    <color name="gold_star">#F2B705</color>
+    <color name="result_table_header">#F7F9FC</color>
 
     <color name="icon_bg_gray">#F0F1F3</color>
-    <color name="card_selected_bg">#EAF0FE</color>
+    <color name="card_selected_bg">#E6EBF6</color>
 </resources>

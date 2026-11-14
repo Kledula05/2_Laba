@@ -3,7 +3,9 @@ package com.ustenko.ui.modeselect
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.ustenko.R
 import com.ustenko.model.GameMode
 import com.ustenko.ui.main.MainActivity
@@ -12,6 +14,7 @@ class ModeSelectActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MODE = "extra_mode"
+        private const val STATE_SELECTED_MODE = "selected_mode"
     }
 
     private var selectedMode = GameMode.DUO
@@ -24,6 +27,7 @@ class ModeSelectActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mode_select)
+        selectedMode = GameMode.valueOf(savedInstanceState?.getString(STATE_SELECTED_MODE) ?: GameMode.DUO.name)
 
         cardSingle = findViewById(R.id.cardSingle)
         cardDuo = findViewById(R.id.cardDuo)
@@ -43,6 +47,11 @@ class ModeSelectActivity : AppCompatActivity() {
         updateSelection()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_SELECTED_MODE, selectedMode.name)
+    }
+
     private fun selectMode(mode: GameMode) {
         selectedMode = mode
         updateSelection()
@@ -54,5 +63,13 @@ class ModeSelectActivity : AppCompatActivity() {
         cardDuo.background = getDrawable(if (!isSingle) R.drawable.bg_card_selected else R.drawable.bg_card)
         checkSingle.visibility = if (isSingle) View.VISIBLE else View.GONE
         checkDuo.visibility = if (!isSingle) View.VISIBLE else View.GONE
+        updateIcon(R.id.iconSingle, isSingle)
+        updateIcon(R.id.iconDuo, !isSingle)
+    }
+
+    private fun updateIcon(iconId: Int, selected: Boolean) {
+        val icon = findViewById<ImageView>(iconId)
+        icon.setBackgroundResource(if (selected) R.drawable.bg_mode_icon_selected else R.drawable.bg_mode_icon)
+        icon.setColorFilter(ContextCompat.getColor(this, if (selected) R.color.white else R.color.text_secondary))
     }
 }

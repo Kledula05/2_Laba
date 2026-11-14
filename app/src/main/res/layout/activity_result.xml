@@ -4,29 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_background"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingHorizontal="28dp"
+        android:paddingBottom="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            android:text="@string/result_trophy"
-            android:textSize="40sp" />
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="72dp"
+            android:src="@drawable/ic_trophy" />
 
         <TextView
             android:id="@+id/tvWinnerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -43,30 +44,33 @@
             android:id="@+id/tvScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="14dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textColor="@color/text_primary"
+            android:textSize="48sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_card"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:clipToOutline="true"
+            android:foreground="@drawable/bg_action_outline">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/result_table_header"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="12dp">
+                android:paddingVertical="12dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.3" />
 
                 <TextView
                     android:id="@+id/tvPlayer1Header"
@@ -74,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textStyle="bold" />
 
                 <TextView
@@ -83,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -95,14 +99,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:paddingVertical="10dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
+                    android:paddingStart="16dp"
                     android:text="@string/result_stat_avg"
                     android:textColor="@color/text_secondary" />
 
@@ -116,7 +121,10 @@
                     <TextView
                         android:id="@+id/tvAvg1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starAvg1"
@@ -128,28 +136,31 @@
                         android:visibility="gone" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/avgContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:minHeight="24dp">
 
                     <TextView
                         android:id="@+id/tvAvg2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starAvg2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="5dp"
                         android:text="@string/result_star"
                         android:textColor="@color/gold_star"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
 
             <View
@@ -160,14 +171,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp">
+                android:paddingVertical="10dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
+                    android:paddingStart="16dp"
                     android:text="@string/result_stat_best"
                     android:textColor="@color/text_secondary" />
 
@@ -181,7 +193,10 @@
                     <TextView
                         android:id="@+id/tvBest1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starBest1"
@@ -193,28 +208,31 @@
                         android:visibility="gone" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/bestContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:minHeight="24dp">
 
                     <TextView
                         android:id="@+id/tvBest2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starBest2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="5dp"
                         android:text="@string/result_star"
                         android:textColor="@color/gold_star"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
 
             <View
@@ -225,13 +243,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingTop="12dp">
+                android:paddingVertical="10dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
+                    android:paddingStart="16dp"
                     android:text="@string/result_stat_falsestarts"
                     android:textColor="@color/text_secondary" />
 
@@ -245,7 +265,10 @@
                     <TextView
                         android:id="@+id/tvFalseStarts1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starFalseStarts1"
@@ -257,46 +280,55 @@
                         android:visibility="gone" />
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/falseStartsContainer2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:minHeight="24dp">
 
                     <TextView
                         android:id="@+id/tvFalseStarts2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/starFalseStarts2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="5dp"
                         android:text="@string/result_star"
                         android:textColor="@color/gold_star"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnMenu"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_button_outline"
+                android:background="@drawable/bg_action_outline"
                 android:text="@string/btn_menu"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 app:backgroundTint="@null" />
 
             <View
@@ -306,10 +338,11 @@
             <Button
                 android:id="@+id/btnRematch"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_button_filled"
+                android:background="@drawable/bg_action_filled"
                 android:text="@string/btn_rematch"
+                android:textSize="18sp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textStyle="bold"

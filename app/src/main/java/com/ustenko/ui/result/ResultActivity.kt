@@ -84,7 +84,9 @@ class ResultActivity : AppCompatActivity() {
             findViewById<View>(R.id.falseStartsContainer2).visibility = View.GONE
         }
 
-        saveMatch(mode, player1Name, player2Name, score1, score2, targetScore, avg1, avg2, best1, best2, falseStarts1, falseStarts2)
+        if (savedInstanceState == null) {
+            saveMatch(mode, player1Name, player2Name, score1, score2, targetScore, avg1, avg2, best1, best2, falseStarts1, falseStarts2)
+        }
 
         findViewById<View>(R.id.btnRematch).setOnClickListener {
             val intent = Intent(this, GameActivity::class.java).apply {
@@ -150,7 +152,7 @@ class ResultActivity : AppCompatActivity() {
         val betterStarId = if (v1 < v2) starId1 else starId2
 
         val betterText = findViewById<TextView>(betterTextId)
-        betterText.setTextColor(ContextCompat.getColor(this, R.color.blue_primary))
+        betterText.setTextColor(ContextCompat.getColor(this, R.color.blue_accent))
         betterText.setTypeface(null, android.graphics.Typeface.BOLD)
         findViewById<View>(betterStarId).visibility = View.VISIBLE
     }

@@ -1,0 +1,59 @@
+<resources>
+    <string name="mode_single">Solo</string>
+    <string name="mode_duo">Two players</string>
+    <string name="mode_select_title">Choose a game mode</string>
+    <string name="mode_select_subtitle">Play alone or with a friend on one phone</string>
+    <string name="mode_single_desc">Practice your reaction time</string>
+    <string name="mode_duo_desc">Duel on the same device</string>
+    <string name="btn_continue">Continue</string>
+
+    <string name="player1_hint">Player 1</string>
+    <string name="player2_hint">Player 2</string>
+    <string name="score_label">Points to win</string>
+    <string name="btn_play">Play</string>
+
+    <string name="history_title">Recent matches</string>
+    <string name="history_empty">Play your first match</string>
+    <string name="history_single">%1$s · practice</string>
+    <string name="history_date_today">Today, %1$s</string>
+    <string name="history_date_yesterday">Yesterday, %1$s</string>
+
+    <string name="round_ready">Get ready…</string>
+    <string name="round_signal">TAP!</string>
+    <string name="round_falsestart">False start!</string>
+    <string name="round_point">+1 · %1$d ms</string>
+    <string name="result_win_label">Winner!</string>
+    <string name="result_practice_label">Practice complete!</string>
+    <string name="result_stat_avg">Average time</string>
+    <string name="result_stat_best">Best time</string>
+    <string name="result_stat_falsestarts">False starts</string>
+    <string name="btn_menu">Back to menu</string>
+    <string name="btn_rematch">Rematch</string>
+    <string name="ms_format">%d ms</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_back">Back</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_value">@string/language_english</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_section_game">Game</string>
+    <string name="settings_sound">Sound cue</string>
+    <string name="settings_vibration">Vibrate on cue</string>
+    <string name="settings_section_data">Data</string>
+    <string name="settings_clear_history">Clear match history</string>
+    <string name="settings_clear_confirm_title">Clear history?</string>
+    <string name="settings_clear_confirm_message">All saved matches will be permanently deleted.</string>
+    <string name="settings_clear_confirm_yes">Clear</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="settings_cleared_toast">History cleared</string>
+    <string name="settings_section_about">About the app</string>
+    <string name="settings_version">Version</string>
+
+    <string name="pause_title">Paused</string>
+    <string name="pause_resume">Resume</string>
+    <string name="pause_exit_menu">Exit to menu</string>
+</resources>

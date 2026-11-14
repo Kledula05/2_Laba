@@ -1,15 +1,19 @@
 package com.ustenko.ui.settings
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ustenko.R
 import com.ustenko.data.AppDatabase
 import com.ustenko.data.AppPreferences
+import com.ustenko.model.AppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -25,8 +29,10 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
 
-        findViewById<View>(R.id.rowLanguage).setOnClickListener { showAppearanceUnavailable() }
-        findViewById<View>(R.id.rowTheme).setOnClickListener { showAppearanceUnavailable() }
+        findViewById<View>(R.id.rowLanguage).setOnClickListener { showLanguageDialog() }
+        val themeValue = findViewById<TextView>(R.id.tvThemeValue)
+        themeValue.setText(preferences.theme.label)
+        findViewById<View>(R.id.rowTheme).setOnClickListener { showThemeDialog(themeValue) }
 
         val swSound = findViewById<Switch>(R.id.swSound)
         swSound.isChecked = preferences.soundEnabled
@@ -45,16 +51,43 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAppearanceUnavailable() {
-        Toast.makeText(this, R.string.settings_appearance_unavailable, Toast.LENGTH_SHORT).show()
+    private fun showLanguageDialog() {
+        val languages = arrayOf("ru", "en")
+        val labels = arrayOf(getString(R.string.language_russian), getString(R.string.language_english))
+        val selected = labels.indexOf(getString(R.string.settings_language_value))
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.settings_language)
+            .setSingleChoiceItems(labels, selected) { dialog, index ->
+                dialog.dismiss()
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(languages[index]))
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
+    }
+
+    private fun showThemeDialog(themeValue: TextView) {
+        val themes = AppTheme.entries
+        val labels = themes.map { getString(it.label) }.toTypedArray()
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.settings_theme)
+            .setSingleChoiceItems(labels, themes.indexOf(preferences.theme)) { dialog, index ->
+                val theme = themes[index]
+                preferences.theme = theme
+                themeValue.setText(theme.label)
+                dialog.dismiss()
+                AppCompatDelegate.setDefaultNightMode(theme.nightMode)
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
     }
 
     private fun confirmClearHistory() {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle(R.string.settings_clear_confirm_title)
             .setMessage(R.string.settings_clear_confirm_message)
             .setPositiveButton(R.string.settings_clear_confirm_yes) { _, _ -> clearHistory() }
-            .setNegativeButton(R.string.settings_clear_confirm_cancel, null)
+            .setNegativeButton(R.string.btn_cancel, null)
             .show()
     }
 

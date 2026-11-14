@@ -12,38 +12,55 @@
         android:layout_weight="1"
         android:background="@color/round_waiting">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:rotation="180">
 
             <TextView
                 android:id="@+id/tvPlayer2Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:layout_gravity="top|start"
+                android:layout_margin="22dp"
+                android:background="@drawable/bg_player_name"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="260dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPlayer2Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:layout_gravity="top|end"
+                android:layout_margin="22dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPlayer2Status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </FrameLayout>
+
+    <View
+        android:id="@+id/gameDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white" />
 
     <FrameLayout
         android:id="@+id/bottomHalf"
@@ -52,36 +69,47 @@
         android:layout_weight="1"
         android:background="@color/round_waiting">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:rotation="0">
 
             <TextView
                 android:id="@+id/tvPlayer1Name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/white" />
+                android:layout_gravity="top|start"
+                android:layout_margin="22dp"
+                android:background="@drawable/bg_player_name"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="260dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="6dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPlayer1Score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:layout_gravity="top|end"
+                android:layout_margin="22dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPlayer1Status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+        </FrameLayout>
     </FrameLayout>
-
 </LinearLayout>
