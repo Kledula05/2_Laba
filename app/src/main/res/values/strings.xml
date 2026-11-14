@@ -7,8 +7,6 @@
     <string name="mode_select_subtitle">Можно сыграть одному или вдвоём на одном телефоне</string>
     <string name="mode_single_desc">Тренировка скорости реакции</string>
     <string name="mode_duo_desc">Дуэль вдвоём на одном устройстве</string>
-    <string name="icon_single" translatable="false">👤</string>
-    <string name="icon_duo" translatable="false">👥</string>
     <string name="icon_check" translatable="false">✓</string>
     <string name="btn_continue">Продолжить</string>
 
@@ -30,7 +28,6 @@
     <string name="round_signal">ЖМИ!</string>
     <string name="round_falsestart">Фальстарт!</string>
     <string name="round_point">+1 · %1$d мс</string>
-    <string name="result_trophy" translatable="false">🏆</string>
     <string name="result_win_label">Победа!</string>
     <string name="result_practice_label">Тренировка завершена!</string>
     <string name="result_stat_avg">Среднее время</string>

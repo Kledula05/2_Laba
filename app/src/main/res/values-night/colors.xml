@@ -10,5 +10,6 @@
     <color name="settings_danger">#FF8983</color>
     <color name="icon_bg_gray">#2B3443</color>
     <color name="card_selected_bg">#243653</color>
+    <color name="result_table_header">#2B3443</color>
     <bool name="light_system_bars">false</bool>
 </resources>

@@ -17,6 +17,9 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ustenko.R
 import com.ustenko.data.AppPreferences
@@ -71,7 +74,12 @@ class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(R.layout.activity_game)
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            hide(WindowInsetsCompat.Type.systemBars())
+        }
 
         preferences = AppPreferences(this)
 
@@ -106,6 +114,7 @@ class GameActivity : AppCompatActivity() {
             }
         } else {
             topHalf.visibility = View.GONE
+            findViewById<View>(R.id.gameDivider).visibility = View.GONE
         }
 
         onBackPressedDispatcher.addCallback(this) {

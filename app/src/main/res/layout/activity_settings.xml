@@ -3,18 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background">
+    android:background="@color/screen_background"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="22dp"
+        android:paddingBottom="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -52,13 +53,13 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_language" />
 
             <LinearLayout
@@ -71,6 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_language"
+                    android:textSize="16sp"
                     android:textColor="@color/text_primary" />
 
                 <TextView
@@ -98,13 +100,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_palette" />
 
             <LinearLayout
@@ -117,6 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_theme"
+                    android:textSize="16sp"
                     android:textColor="@color/text_primary" />
 
                 <TextView
@@ -150,13 +153,13 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_volume" />
 
             <TextView
@@ -164,12 +167,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/settings_sound"
+                android:textSize="16sp"
                 android:textColor="@color/text_primary" />
 
             <Switch
                 android:id="@+id/swSound"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:splitTrack="false"
+                android:switchMinWidth="42dp"
+                android:thumb="@drawable/bg_switch_thumb"
+                android:track="@drawable/bg_switch_track" />
         </LinearLayout>
 
         <View
@@ -182,13 +190,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_vibration" />
 
             <TextView
@@ -196,12 +204,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/settings_vibration"
+                android:textSize="16sp"
                 android:textColor="@color/text_primary" />
 
             <Switch
                 android:id="@+id/swVibration"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:splitTrack="false"
+                android:switchMinWidth="42dp"
+                android:thumb="@drawable/bg_switch_thumb"
+                android:track="@drawable/bg_switch_track" />
         </LinearLayout>
 
         <TextView
@@ -221,14 +234,14 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:id="@+id/ivDelete"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_delete"
                 app:tint="@color/settings_danger" />
 
@@ -236,6 +249,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_clear_history"
+                android:textSize="16sp"
                 android:textColor="@color/settings_danger" />
         </LinearLayout>
 
@@ -255,13 +269,13 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="14dp"
                 android:src="@drawable/ic_info" />
 
             <LinearLayout
@@ -274,6 +288,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_version"
+                    android:textSize="16sp"
                     android:textColor="@color/text_primary" />
 
                 <TextView

@@ -12,13 +12,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:clipToPadding="false"
+        android:paddingHorizontal="22dp"
+        android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="-12dp"
+            android:layout_marginTop="0dp"
             android:text="@string/app_name"
             android:textColor="@color/text_primary"
             android:textSize="22sp"
@@ -39,7 +42,7 @@
             android:id="@+id/llNamesRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,8 +69,11 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_card"
                     android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:textSize="16sp"
                     android:textColor="@color/text_primary"
-                    android:padding="12dp" />
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="10dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,8 +99,11 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_card"
                     android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:textSize="16sp"
                     android:textColor="@color/text_primary"
-                    android:padding="12dp" />
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="10dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -102,7 +111,7 @@
             android:id="@+id/tvScoreLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="@string/score_label"
             android:textAllCaps="true"
             android:textColor="@color/text_secondary"
@@ -114,7 +123,7 @@
             android:id="@+id/llScoreChips"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,12 +133,10 @@
                 android:id="@+id/chipScore3"
                 android:layout_width="56dp"
                 android:layout_height="40dp"
-
                 android:background="@drawable/bg_button_outline"
                 android:gravity="center"
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp"
                 android:text="3"
+                android:textSize="16sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold" />
 
@@ -137,12 +144,11 @@
                 android:id="@+id/chipScore5"
                 android:layout_width="56dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/bg_button_filled"
                 android:gravity="center"
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp"
                 android:text="5"
+                android:textSize="16sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -150,12 +156,11 @@
                 android:id="@+id/chipScore7"
                 android:layout_width="56dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:background="@drawable/bg_button_outline"
                 android:gravity="center"
-                android:paddingTop="0dp"
-                android:paddingBottom="0dp"
                 android:text="7"
+                android:textSize="16sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -163,9 +168,11 @@
         <Button
             android:id="@+id/btnPlay"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/bg_button_filled"
+            android:layout_height="54dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_action_filled"
+            android:elevation="6dp"
+            android:textSize="18sp"
             android:text="@string/btn_play"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -179,11 +186,12 @@
             android:id="@+id/tvHistoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/history_title"
             android:textAllCaps="true"
             android:textColor="@color/text_secondary"
-            android:textSize="12sp"
+            android:textSize="13sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnPlay" />
 
